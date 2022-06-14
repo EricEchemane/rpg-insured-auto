@@ -19,7 +19,7 @@ export default function Signup() {
         },
     });
 
-    const { data, loading, error, post, succeeded } = useFetch('/api/users/add', {
+    const { loading, post, succeeded } = useFetch('/api/users/add', {
         method: 'POST',
         body: JSON.stringify(form.values)
     });
@@ -28,7 +28,11 @@ export default function Signup() {
         const validation = form.validate();
         if (validation.hasErrors === false) {
             const data = await post();
-            console.log(data);
+            if (!data) {
+                form.setErrors({
+                    email: 'Email already used',
+                });
+            }
         }
     };
 
@@ -82,6 +86,7 @@ export default function Signup() {
                     {...form.getInputProps('confirmPassword')}
                 />
                 <Button
+                    size='md'
                     mt={20}
                     disabled={loading}
                     onClick={handleSubmit}> SIGN UP </Button>
