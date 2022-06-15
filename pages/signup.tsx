@@ -1,6 +1,7 @@
 import { Anchor, Button, Center, LoadingOverlay, Modal, Paper, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import useFetch from 'modules/useFetch';
+import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
 
@@ -37,6 +38,9 @@ export default function Signup() {
     };
 
     return <>
+        <Head>
+            <title> Sign up - RPG Insured Auto </title>
+        </Head>
         <Modal
             opened={succeeded}
             onClose={() => { }}

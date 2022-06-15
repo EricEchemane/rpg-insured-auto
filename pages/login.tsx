@@ -1,6 +1,7 @@
 import { Paper, Stack, Title, TextInput, PasswordInput, Button, Anchor, LoadingOverlay, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import useFetch from 'modules/useFetch';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -32,6 +33,9 @@ export default function Login() {
         }
     };
     return <>
+        <Head>
+            <title> Login - RPG Insured Auto </title>
+        </Head>
         <Paper
             m='3rem auto' p={30}
             radius='md'
