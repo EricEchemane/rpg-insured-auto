@@ -29,6 +29,9 @@
       "components": [
         "components/*"
       ],
+      "contexts": [
+        "contexts/*"
+      ],
     },
   },
   "include": [

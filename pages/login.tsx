@@ -1,11 +1,14 @@
 import { Paper, Stack, Title, TextInput, PasswordInput, Button, Anchor, LoadingOverlay, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import UserContext from 'contexts/userContext';
 import useFetch from 'modules/useFetch';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useContext } from 'react';
 
 export default function Login() {
+    const userContext = useContext(UserContext);
     const router = useRouter();
     const form = useForm({
         initialValues: {
@@ -29,7 +32,10 @@ export default function Login() {
             const data = await post();
             if (!data) {
                 form.setFieldError('password', 'Something is incorrect');
-            } else router.push('/insurance');
+            } else {
+                userContext.setUser(form.values);
+                router.push('/insurance');
+            }
         }
     };
     return <>
