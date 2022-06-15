@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 type Options = {
     method?: string;
@@ -12,7 +12,7 @@ export default function useFetch(url: string, options?: Options) {
     const [succeeded, setSucceeded] = useState<boolean>(false);
     const [data, setData] = useState<any>();
 
-    const get = async () => {
+    const get = useCallback(async () => {
         setLoading(true);
         try {
             const res = await fetch(url);
@@ -30,9 +30,9 @@ export default function useFetch(url: string, options?: Options) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [url]);
 
-    const post = async () => {
+    const post = useCallback(async () => {
         setLoading(true);
         try {
             const res = await fetch(url, options);
@@ -50,7 +50,7 @@ export default function useFetch(url: string, options?: Options) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [options, url]);
 
     return { data, loading, error, succeeded, get, post };
 }

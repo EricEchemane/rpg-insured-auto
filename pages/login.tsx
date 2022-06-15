@@ -29,7 +29,7 @@ export default function Login() {
             const data = await post();
             if (!data) {
                 form.setFieldError('password', 'Something is incorrect');
-            } else router.push('/');
+            } else router.push('/insurance');
         }
     };
     return <>

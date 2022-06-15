@@ -28,10 +28,10 @@ export default function Home() {
           </Text>
           <Group spacing={20} mt={40}>
             <Link href='/login'>
-              <Button> Login </Button>
+              <Button size='md'> Login </Button>
             </Link>
             <Link href='/signup'>
-              <Button variant='outline'> Sign up </Button>
+              <Button size='md' variant='outline'> Sign up </Button>
             </Link>
           </Group>
         </Stack>
