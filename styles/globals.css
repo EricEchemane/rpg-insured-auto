@@ -18,10 +18,5 @@ a {
 .landing {
   background-image: url(https://www.bypeople.com/wp-content/uploads/2014/05/light-svg-background-image.jpg);
   background-size: cover;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   min-height: 100vh;
 }
