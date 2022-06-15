@@ -36,7 +36,7 @@ export default function Signup() {
         }
     };
 
-    return (<>
+    return <>
         <Modal
             opened={succeeded}
             onClose={() => { }}
@@ -100,5 +100,5 @@ export default function Signup() {
                 </Anchor>
             </Stack>
         </Paper>
-    </>);
+    </>;
 }

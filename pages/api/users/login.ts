@@ -22,14 +22,13 @@ export default async function handler(
             return;
         }
 
-        if (user.password === password) {
-            const signature = process.env.SIGNATURE;
-            if (signature) {
-                const token = jwt.sign(email, signature);
-                res.status(200).send(token);
-            }
-            else res.status(500).send('Server error occured');
+        const signature = process.env.SIGNATURE;
+
+        if (user.password === password && signature) {
+            const token = jwt.sign(email, signature);
+            res.status(200).json({ token: token });
         }
+        else res.status(404).send('Something is incorrect');
 
     } catch (error) {
         res.status(500).end();
