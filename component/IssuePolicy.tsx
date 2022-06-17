@@ -16,8 +16,14 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
             nameOfAssured: (value) => value.trim().length > 0 ? null : 'Your name is required',
             address: (value) => value.trim().length > 0 ? null : 'Address is required',
             issueDate: (value) => value.trim().length > 0 ? null : 'This filed is required',
-            // MVFileNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
-            // COCNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
+            MVFileNumber: (value) => {
+                if (user.insuranceType !== "ctp") return null;
+                return value.trim().length > 0 ? null : 'This filed is required';
+            },
+            COCNumber: (value) => {
+                if (user.insuranceType !== "ctp") return null;
+                return value.trim().length > 0 ? null : 'This filed is required';
+            },
             expiryDate: (value) => value.trim().length > 0 ? null : 'This filed is required',
             inceptionDate: (value) => value.trim().length > 0 ? null : 'This filed is required',
             MakeOrDescription: (value) => value.trim().length > 0 ? null : 'This filed is required',
@@ -45,19 +51,28 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
             return;
         }
 
-        const validation = form.validate();
-
         const notloggedIn = user.email === "not loged in";
         if (notloggedIn) {
             showNotification({
                 title: 'You are not logged in',
-                message: (<Anchor href='/login'>Login to my account first</Anchor>),
+                message: (<Anchor href='/login'>Login to your account first</Anchor>),
                 color: 'orange',
             });
             return;
         }
 
-        if (validation.hasErrors || !user.insuranceType) {
+        if (!user.insuranceType) {
+            showNotification({
+                title: 'Choose an insurance type first',
+                message: (<Anchor onClick={prevStep}> Choose now </Anchor>),
+                color: 'orange',
+            });
+            return;
+        }
+
+        const validation = form.validate();
+
+        if (validation.hasErrors) {
             console.log(validation.errors);
         } else {
             setIssuePolicyInfo(form.values);

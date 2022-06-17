@@ -2,11 +2,12 @@ import { Button, Container, Paper, Stack, Stepper, Text, Title } from '@mantine/
 import CompContent from 'component/CompContent';
 import CTPContent from 'component/CTPContent';
 import IssuePolicy from 'component/IssuePolicy';
-import useUserContext, { UserContextType } from 'contexts/userContext';
+import useUserContext, { UserContextType, UserType } from 'contexts/userContext';
 import prisma from 'lib/prisma_client';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import jwt from 'jsonwebtoken';
+import Printing from 'component/Printing';
 
 export default function Insurance({ _user }: any) {
     const { user, setUser }: UserContextType = useUserContext();
@@ -16,6 +17,15 @@ export default function Insurance({ _user }: any) {
 
     useEffect(() => {
         if (!_user) return;
+
+        if (!_user.insurance) {
+            setUser((prev: UserType) => ({
+                ...prev,
+                email: _user.email,
+                insuranceType: _user.insuranceType,
+            }));
+            return;
+        }
         const issuePolicyInfo = {
             nameOfAssured: _user.insurance.nameOfAssured,
             address: _user.insurance.address,
@@ -68,8 +78,14 @@ export default function Insurance({ _user }: any) {
 
                     <Stepper.Step
                         label="3rd step"
-                        description="Printing and Payment">
-                        step 3
+                        description="Printing">
+                        <Printing nextStep={nextStep} prevStep={prevStep} />
+                    </Stepper.Step>
+
+                    <Stepper.Step
+                        label="4th step"
+                        description="Payment">
+                        step 4
                     </Stepper.Step>
                 </Stepper>
 
