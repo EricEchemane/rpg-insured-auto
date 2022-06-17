@@ -7,7 +7,7 @@ export default function useUserContext() {
 }
 
 export function UserContextProvider({ children }: any) {
-    const [user, setUser] = useState<User>(UserContextInitialValue);
+    const [user, setUser] = useState<UserType>(UserContextInitialValue);
 
     const update = (key: string, value: any) => {
         setUser((prev) => ({ ...prev, [key]: value }));
@@ -30,13 +30,13 @@ export function UserContextProvider({ children }: any) {
 /* ======== TYPES ========================================= */
 
 export type UserContextType = {
-    user: User;
+    user: UserType;
     setEmail: (email: string) => void;
     setInsuranceType: (type: "comp" | "ctp") => void;
     setIssuePolicyInfo: (info: IssuePolicyInfoType) => void;
 };
 
-type User = {
+export type UserType = {
     email: string;
     insuranceType: "comp" | "ctp" | undefined;
     issuePolicyInfo: IssuePolicyInfoType;
@@ -60,7 +60,7 @@ export type IssuePolicyInfoType = {
     MortgageFinancing: string;
 };
 
-const UserContextInitialValue: User = {
+const UserContextInitialValue: UserType = {
     email: "not loged in",
     insuranceType: "ctp",
     issuePolicyInfo: {

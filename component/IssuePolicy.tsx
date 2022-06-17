@@ -47,7 +47,7 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
         <>
             <Title order={5}> Fill up the form below carefully </Title>
             <Text weight={600}> Insurance type: {insuranceType} </Text>
-            <Grid mt={20}>
+            <Grid my={20}>
 
                 <Grid.Col span={span}>
                     <TextInput

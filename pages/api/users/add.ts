@@ -9,7 +9,7 @@ export default async function handler(
     const { email, password } = JSON.parse(req.body);
 
     if (!email || !password) {
-        res.status(400);
+        res.status(400).json({ error: 'incomplete information' });
         return;
     }
 
@@ -17,10 +17,12 @@ export default async function handler(
         const newUser = await prisma.user.create({
             data: { email, password }
         });
-        res.status(200).send(newUser);
+        res.status(200).json(newUser);
 
     } catch (error: any) {
+        console.log(error);
+
         if (error.code === 'P2002') res.status(400).json({ error: 'Email already exist' });
-        else res.status(500);
+        else res.status(500).json({ error });
     }
 }
