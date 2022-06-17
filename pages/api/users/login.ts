@@ -6,14 +6,14 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { email, password } = JSON.parse(req.body);
-
-    if (!email || !password) {
-        res.status(400);
-        return;
-    }
-
     try {
+        const { email, password } = JSON.parse(req.body);
+
+        if (!email || !password) {
+            res.status(400);
+            return;
+        }
+
         const user = await prisma.user.findUnique({
             where: { email: email }
         });

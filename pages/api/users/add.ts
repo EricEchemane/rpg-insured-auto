@@ -6,14 +6,14 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { email, password } = JSON.parse(req.body);
-
-    if (!email || !password) {
-        res.status(400).json({ error: 'incomplete information' });
-        return;
-    }
-
     try {
+        const { email, password } = JSON.parse(req.body);
+
+        if (!email || !password) {
+            res.status(400).json({ error: 'incomplete information' });
+            return;
+        }
+
         const newUser = await prisma.user.create({
             data: { email, password }
         });

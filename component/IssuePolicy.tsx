@@ -5,7 +5,7 @@ import useUserContext, { UserContextType } from 'contexts/userContext';
 import React from 'react';
 
 export default function IssuePolicy({ nextStep, prevStep }: any) {
-    const { user, setIssuePolicyInfo }: UserContextType = useUserContext();
+    const { user, setIssuePolicyInfo, issuePolicy }: UserContextType = useUserContext();
     const form = useForm({
         initialValues: user.issuePolicyInfo,
         validate: {
@@ -27,13 +27,18 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
         }
     });
 
-    const save = () => {
+    const save = async () => {
         const validation = form.validate();
         if (validation.hasErrors) {
-
+            console.log(validation.errors);
         } else {
             setIssuePolicyInfo(form.values);
-            nextStep();
+            const success = await issuePolicy({
+                email: user.email,
+                insuranceType: user.insuranceType,
+                issuePolicyInfo: form.values
+            });
+            if (success) nextStep();
         }
     };
 
@@ -46,7 +51,9 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
     return (
         <>
             <Title order={5}> Fill up the form below carefully </Title>
-            <Text weight={600}> Insurance type: {insuranceType} </Text>
+
+            {user.insuranceType && <Text weight={600}> Insurance type: {insuranceType} </Text>}
+
             <Grid my={20}>
 
                 <Grid.Col span={span}>

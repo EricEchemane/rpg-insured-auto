@@ -33,7 +33,8 @@ export default function Login() {
                 form.setFieldError('password', 'Something is incorrect');
             } else {
                 userContext.setEmail(form.values.email);
-                router.push('/insurance');
+                document.cookie = "email=" + data.token;
+                router.replace('/insurance');
             }
         }
     };
