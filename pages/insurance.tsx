@@ -1,14 +1,13 @@
 import { Button, Container, Grid, Paper, Spoiler, Stack, Stepper, Text, Title } from '@mantine/core';
-import { useHover } from '@mantine/hooks';
-import UserContext from 'contexts/userContext';
+import useUserContext from 'contexts/userContext';
 import Head from 'next/head';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 export default function Insurance() {
-    const { user } = useContext(UserContext);
+    const { user } = useUserContext();
     const [active, setActive] = useState(0);
     const [selectedInsurance, setSelectedInsurance] = useState<number>(-1);
-    const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
+    const nextStep = () => setActive((current) => (current < 5 ? current + 1 : current));
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
     return <>
