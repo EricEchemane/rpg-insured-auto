@@ -15,6 +15,7 @@ export default function Insurance({ _user }: any) {
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
     useEffect(() => {
+        if (!_user) return;
         const issuePolicyInfo = {
             nameOfAssured: _user.insurance.nameOfAssured,
             address: _user.insurance.address,
@@ -51,7 +52,6 @@ export default function Insurance({ _user }: any) {
 
                 <Stepper active={active} onStepClick={setActive} breakpoint="sm">
                     <Stepper.Step
-                        allowStepSelect={active > 0}
                         label="First step"
                         description="Select insurance">
                         <Text my={20} > Please select one </Text>
@@ -61,14 +61,12 @@ export default function Insurance({ _user }: any) {
                     </Stepper.Step>
 
                     <Stepper.Step
-                        allowStepSelect={active > 1}
                         label="2nd step"
                         description="Issue Policy">
                         <IssuePolicy nextStep={nextStep} prevStep={prevStep} />
                     </Stepper.Step>
 
                     <Stepper.Step
-                        allowStepSelect={active > 2}
                         label="3rd step"
                         description="Printing and Payment">
                         step 3
@@ -81,13 +79,15 @@ export default function Insurance({ _user }: any) {
 }
 
 export async function getServerSideProps(context: any) {
-    let _user;
+    let _user = null;
     try {
         const cookies = context.req.cookies;
         const token = cookies.email;
         const signature = process.env.SIGNATURE;
+
         let email: any;
-        if (signature) email = jwt.verify(token, signature);
+        if (signature && token) email = jwt.verify(token, signature);
+        else return;
 
         _user = await prisma.user.findUnique({
             where: { email: email },
