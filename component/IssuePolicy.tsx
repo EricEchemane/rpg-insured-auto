@@ -1,4 +1,4 @@
-import { Button, Grid, Group, TextInput, Title } from '@mantine/core';
+import { Button, Grid, Group, Text, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
 import useUserContext, { UserContextType } from 'contexts/userContext';
@@ -39,11 +39,15 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
 
     const smallDevice = useMediaQuery('(max-width: 500px)', false);
     const span = smallDevice ? 12 : 6;
+    const insuranceType = user.insuranceType === "comp"
+        ? "Comprehensive"
+        : "Compulsory Third Party";
 
     return (
         <>
             <Title order={5}> Fill up the form below carefully </Title>
-            <Grid my={30}>
+            <Text weight={600}> Insurance type: {insuranceType} </Text>
+            <Grid mt={20}>
 
                 <Grid.Col span={span}>
                     <TextInput

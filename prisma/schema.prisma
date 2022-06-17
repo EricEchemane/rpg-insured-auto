@@ -5,10 +5,33 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Insurance {
+  id                  String @id @default(cuid())
+  nameOfAssured       String
+  address             String
+  issueDate           String
+  MVFileNumber        String
+  COCNumber           String
+  expiryDate          String
+  inceptionDate       String
+  MakeOrDescription   String
+  UnitTypeORBodytType String
+  YearModel           String
+  color               String
+  EngineOrmotorNumber String
+  ChassisNumber       String
+  PlateNumber         String
+  MortgageFinancing   String
+  user                User   @relation(fields: [userId], references: [id])
+  userId              String @unique
+}
+
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
-  password String
+  id            String     @id @default(cuid())
+  email         String     @unique
+  password      String
+  insuranceType String
+  insurance     Insurance?
 }
 
 datasource db {
