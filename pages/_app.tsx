@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { MantineProvider } from '@mantine/core';
 import { UserContextProvider } from 'contexts/userContext';
+import { NotificationsProvider } from '@mantine/notifications';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return <>
@@ -11,9 +12,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <UserContextProvider>
-        <div className="landing">
-          <Component {...pageProps} />
-        </div>
+        <NotificationsProvider>
+          <div className="landing">
+            <Component {...pageProps} />
+          </div>
+        </NotificationsProvider>
       </UserContextProvider>
     </MantineProvider>
   </>;

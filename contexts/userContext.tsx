@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const UserContext = createContext<any>({});
 
@@ -17,20 +17,11 @@ export function UserContextProvider({ children }: any) {
     const setInsuranceType = (type: "comp" | "ctp") => update('insuranceType', type);
     const setIssuePolicyInfo = (info: IssuePolicyInfoType) => update('issuePolicyInfo', info);
 
-    const issuePolicy = useCallback(async (values: UserType) => {
-        const res = await fetch('/api/users/issue_insurance', {
-            method: 'POST',
-            body: JSON.stringify(values)
-        });
-        if (res.ok) return (await res.json());
-        return null;
-    }, []);
-
     return (
         <UserContext.Provider value={{
-            user,
+            user, setUser,
             setEmail, setInsuranceType,
-            setIssuePolicyInfo, issuePolicy
+            setIssuePolicyInfo
         }}>
             {children}
         </UserContext.Provider>
@@ -41,10 +32,10 @@ export function UserContextProvider({ children }: any) {
 
 export type UserContextType = {
     user: UserType;
+    setUser: any;
     setEmail: (email: string) => void;
     setInsuranceType: (type: "comp" | "ctp") => void;
     setIssuePolicyInfo: (info: IssuePolicyInfoType) => void;
-    issuePolicy: (values: UserType) => Promise<any>;
 };
 
 export type UserType = {

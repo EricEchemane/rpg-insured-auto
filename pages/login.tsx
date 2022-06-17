@@ -38,6 +38,7 @@ export default function Login() {
             }
         }
     };
+
     return <>
         <Head>
             <title> Login - RPG Insured Auto </title>

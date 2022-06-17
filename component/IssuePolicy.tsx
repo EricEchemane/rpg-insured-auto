@@ -1,19 +1,23 @@
-import { Button, Grid, Group, Text, TextInput, Title } from '@mantine/core';
+import { Anchor, Button, Grid, Group, Text, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
+import { hideNotification, showNotification } from '@mantine/notifications';
 import useUserContext, { UserContextType } from 'contexts/userContext';
+import useFetch from 'modules/useFetch';
 import React from 'react';
+import { CircleCheck } from 'tabler-icons-react';
 
 export default function IssuePolicy({ nextStep, prevStep }: any) {
-    const { user, setIssuePolicyInfo, issuePolicy }: UserContextType = useUserContext();
+    const { user, setIssuePolicyInfo }: UserContextType = useUserContext();
+
     const form = useForm({
         initialValues: user.issuePolicyInfo,
         validate: {
             nameOfAssured: (value) => value.trim().length > 0 ? null : 'Your name is required',
             address: (value) => value.trim().length > 0 ? null : 'Address is required',
             issueDate: (value) => value.trim().length > 0 ? null : 'This filed is required',
-            MVFileNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
-            COCNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
+            // MVFileNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
+            // COCNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
             expiryDate: (value) => value.trim().length > 0 ? null : 'This filed is required',
             inceptionDate: (value) => value.trim().length > 0 ? null : 'This filed is required',
             MakeOrDescription: (value) => value.trim().length > 0 ? null : 'This filed is required',
@@ -27,18 +31,63 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
         }
     });
 
+    const { loading, post, succeeded } = useFetch('/api/users/issue_insurance', {
+        method: 'POST',
+        body: JSON.stringify({
+            insuranceType: user.insuranceType,
+            issuePolicyInfo: form.values
+        })
+    });
+
     const save = async () => {
+        if (succeeded) {
+            nextStep();
+            return;
+        }
+
         const validation = form.validate();
-        if (validation.hasErrors) {
+
+        const notloggedIn = user.email === "not loged in";
+        if (notloggedIn) {
+            showNotification({
+                title: 'You are not logged in',
+                message: (<Anchor href='/login'>Login to my account first</Anchor>),
+                color: 'orange',
+            });
+            return;
+        }
+
+        if (validation.hasErrors || !user.insuranceType) {
             console.log(validation.errors);
         } else {
             setIssuePolicyInfo(form.values);
-            const success = await issuePolicy({
-                email: user.email,
-                insuranceType: user.insuranceType,
-                issuePolicyInfo: form.values
+            showNotification({
+                id: 'saving',
+                title: 'Saving your data',
+                message: 'Please white before proceeding to next step',
+                loading: true,
+                color: 'blue',
+                disallowClose: true,
+                autoClose: false,
             });
-            if (success) nextStep();
+            const success = await post();
+            hideNotification('saving');
+            if (success) {
+                showNotification({
+                    title: 'Saved successfully!',
+                    message: 'You can now proceed to next step',
+                    color: 'green',
+                    icon: <CircleCheck />
+                });
+            }
+            else {
+                showNotification({
+                    title: 'Cannot save your data',
+                    message: 'An unexpected event happened. Please try again',
+                    color: 'red',
+                    autoClose: false,
+                });
+            }
         }
     };
 
@@ -181,9 +230,12 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
                 </Grid.Col>
 
             </Grid>
+
             <Group spacing={20}>
-                <Button onClick={prevStep} variant='outline'> BACK </Button>
-                <Button onClick={save}> SAVE AND CONTINUE </Button>
+                <Button onClick={prevStep} disabled={loading} variant='outline'> BACK </Button>
+                <Button onClick={save} disabled={loading}>
+                    {succeeded ? 'NEXT STEP' : 'SAVE'}
+                </Button>
             </Group>
         </>
     );

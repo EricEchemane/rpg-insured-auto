@@ -22,6 +22,7 @@ export default async function handler(
 
         if (!email || !insuranceType || !issuePolicyInfo) {
             res.status(400).json({ error: 'Incomplete information' });
+            return;
         }
 
         const userExist = await prisma.user.findUnique({ where: { email: email } });
@@ -38,13 +39,16 @@ export default async function handler(
             where: {
                 userId: userExist?.id
             },
-            update: issuePolicyInfo,
+            update: { ...issuePolicyInfo },
             create: {
                 ...issuePolicyInfo,
                 user: { connect: { id: userExist?.id } }
             }
         });
-        if (newInsurance) res.status(200).json(newInsurance);
+        if (newInsurance) {
+            res.status(200).json(newInsurance);
+            return;
+        }
         else res.status(500).json({ error: 'unable to create insurance' });
 
     } catch (error) {
