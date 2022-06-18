@@ -21,6 +21,7 @@ model Insurance {
   EngineOrmotorNumber String
   ChassisNumber       String
   PlateNumber         String
+  unitPrice           Float
   MortgageFinancing   String
   user                User   @relation(fields: [userId], references: [id])
   userId              String @unique

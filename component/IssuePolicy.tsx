@@ -1,4 +1,4 @@
-import { Anchor, Button, Grid, Group, Text, TextInput, Title } from '@mantine/core';
+import { Anchor, Button, Grid, Group, NumberInput, Text, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
 import { hideNotification, showNotification } from '@mantine/notifications';
@@ -33,6 +33,7 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
             EngineOrmotorNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
             ChassisNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
             PlateNumber: (value) => value.trim().length > 0 ? null : 'This filed is required',
+            unitPrice: (value) => value > 0 ? null : 'This filed is required',
             MortgageFinancing: (value) => value.trim().length > 0 ? null : 'This filed is required',
         }
     });
@@ -234,6 +235,14 @@ export default function IssuePolicy({ nextStep, prevStep }: any) {
                         label='Plate Number'
                         {...form.getInputProps('PlateNumber')}
                         placeholder='Plate Number' />
+                </Grid.Col>
+
+                <Grid.Col span={span}>
+                    <NumberInput
+                        style={{ width: '100%' }}
+                        label='Unit Price (₱)'
+                        {...form.getInputProps('unitPrice')}
+                        placeholder='Unit Price' />
                 </Grid.Col>
 
                 <Grid.Col span={span}>

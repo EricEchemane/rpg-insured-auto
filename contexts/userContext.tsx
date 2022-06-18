@@ -59,6 +59,7 @@ export type IssuePolicyInfoType = {
     EngineOrmotorNumber: string;
     ChassisNumber: string;
     PlateNumber: string;
+    unitPrice: number;
     MortgageFinancing: string;
 };
 
@@ -80,6 +81,7 @@ const UserContextInitialValue: UserType = {
         EngineOrmotorNumber: '',
         ChassisNumber: '',
         PlateNumber: '',
+        unitPrice: 0.00,
         MortgageFinancing: ''
     }
 };

@@ -8,15 +8,20 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import jwt from 'jsonwebtoken';
 import Printing from 'component/Printing';
+import { useRouter } from 'next/router';
 
 export default function Insurance({ _user }: any) {
     const { user, setUser }: UserContextType = useUserContext();
     const [active, setActive] = useState(0);
+    const router = useRouter();
     const nextStep = () => setActive((current) => (current < 5 ? current + 1 : current));
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
     useEffect(() => {
-        if (!_user) return;
+        if (!_user) {
+            router.replace('/');
+            return;
+        }
 
         if (!_user.insurance) {
             setUser((prev: UserType) => ({
@@ -48,7 +53,7 @@ export default function Insurance({ _user }: any) {
             insuranceType: _user.insuranceType,
             issuePolicyInfo: issuePolicyInfo
         });
-    }, [_user, setUser]);
+    }, [_user, router, setUser]);
 
     return <>
         <Head> <title> RPG Insurance </title> </Head>

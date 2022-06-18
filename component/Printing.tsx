@@ -18,7 +18,8 @@ export default function Printing({ nextStep, prevStep }: any) {
         const oldPage = document.body.innerHTML;
         document.body.innerHTML = "<html><head><title></title></head><body>" + divElements + "</body>";
         window.print();
-
+        window.document.body.innerHTML = oldPage;
+        window.location.reload();
     };
 
     return (
