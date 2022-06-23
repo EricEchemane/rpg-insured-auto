@@ -35,13 +35,32 @@ export default async function handler(
             }
         });
 
+        const newPolicyInfo = {
+            nameOfAssured: issuePolicyInfo.nameOfAssured,
+            address: issuePolicyInfo.address,
+            issueDate: issuePolicyInfo.issueDate,
+            inceptionDate: issuePolicyInfo.inceptionDate,
+            expiryDate: issuePolicyInfo.expiryDate,
+            MVFileNumber: issuePolicyInfo.MVFileNumber,
+            COCNumber: issuePolicyInfo.COCNumber,
+            MakeOrDescription: issuePolicyInfo.MakeOrDescription,
+            UnitTypeORBodytType: issuePolicyInfo.UnitTypeORBodytType,
+            YearModel: issuePolicyInfo.YearModel,
+            color: issuePolicyInfo.color,
+            EngineOrmotorNumber: issuePolicyInfo.EngineOrmotorNumber,
+            ChassisNumber: issuePolicyInfo.ChassisNumber,
+            PlateNumber: issuePolicyInfo.PlateNumber,
+            unitPrice: issuePolicyInfo.unitPrice,
+            MortgageFinancing: issuePolicyInfo.MortgageFinancing,
+        };
+
         const newInsurance = await prisma.insurance.upsert({
             where: {
                 userId: userExist?.id
             },
-            update: { ...issuePolicyInfo },
+            update: newPolicyInfo,
             create: {
-                ...issuePolicyInfo,
+                ...newPolicyInfo,
                 user: { connect: { id: userExist?.id } }
             }
         });

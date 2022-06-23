@@ -33,6 +33,7 @@ export default function Insurance({ _user }: any) {
             return;
         }
         const issuePolicyInfo = {
+            id: _user.insurance.id,
             nameOfAssured: _user.insurance.nameOfAssured,
             address: _user.insurance.address,
             issueDate: _user.insurance.issueDate,

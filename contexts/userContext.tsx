@@ -45,6 +45,7 @@ export type UserType = {
 };
 
 export type IssuePolicyInfoType = {
+    id: number;
     nameOfAssured: string;
     address: string;
     issueDate: string;
@@ -67,6 +68,7 @@ const UserContextInitialValue: UserType = {
     email: "not loged in",
     insuranceType: undefined,
     issuePolicyInfo: {
+        id: 0,
         nameOfAssured: '',
         address: '',
         issueDate: '',

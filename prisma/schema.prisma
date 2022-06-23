@@ -6,7 +6,7 @@ generator client {
 }
 
 model Insurance {
-  id                  String @id @default(cuid())
+  id                  Int    @id @default(autoincrement())
   nameOfAssured       String
   address             String
   issueDate           String
