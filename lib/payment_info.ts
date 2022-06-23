@@ -16,6 +16,10 @@ export type PaymentType = {
     premiums_propertyDamage: number;
     premiums_APPA: number;
     premiums_AOG: number | null;
+    docStamps: number;
+    VAT: number;
+    LGT: number;
+    otherCharges: number;
 };
 
 const comp_payment_info: PaymentType = {
@@ -35,6 +39,10 @@ const comp_payment_info: PaymentType = {
     premiums_propertyDamage: 1245.00,
     premiums_APPA: 766.50,
     premiums_AOG: 1988.00,
+    docStamps: 0,
+    VAT: 0,
+    LGT: 0,
+    otherCharges: 0,
 };
 
 const ctpl_payment_info: PaymentType = {
@@ -54,6 +62,10 @@ const ctpl_payment_info: PaymentType = {
     premiums_propertyDamage: 0,
     premiums_APPA: 0,
     premiums_AOG: 0,
+    docStamps: 0,
+    VAT: 0,
+    LGT: 0,
+    otherCharges: 0,
 };
 
 export { comp_payment_info, ctpl_payment_info };

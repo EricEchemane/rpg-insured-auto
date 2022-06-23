@@ -33,6 +33,33 @@ model User {
   password      String
   insuranceType String?
   insurance     Insurance?
+  payment       Payment?
+}
+
+model Payment {
+  id                       String @id @default(cuid())
+  code                     String
+  deductible               Float
+  towing                   Float
+  repLim                   Float
+  coverages_TPL            Float
+  coverages_lossAndDamage  Float
+  coverages_bodilyInjury   Float
+  coverages_propertyDamage Float
+  coverages_APPA           Float
+  coverages_AOG            Float?
+  premiums_TPL             Float
+  premiums_lossAndDamage   Float
+  premiums_bodilyInjury    Float
+  premiums_propertyDamage  Float
+  premiums_APPA            Float
+  premiums_AOG             Float?
+  docStamps                Float
+  VAT                      Float
+  LGT                      Float
+  otherCharges             Float
+  user                     User   @relation(fields: [userId], references: [id])
+  userId                   String @unique
 }
 
 datasource db {

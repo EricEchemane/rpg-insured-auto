@@ -1,6 +1,5 @@
 import { Box, Group, NumberInput, Stack, Text, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { UseFormReturnType } from '@mantine/form/lib/use-form';
 import useUserContext, { UserContextType, UserType } from 'contexts/userContext';
 import { comp_payment_info, ctpl_payment_info, PaymentType } from 'lib/payment_info';
 import React from 'react';
@@ -17,7 +16,7 @@ export default function Payment() {
     const { user }: UserContextType = useUserContext();
     const policyNo = getPolicyCode(user.insuranceType || "comp", user.issuePolicyInfo.id);
     const paymentInfo = user.insuranceType === 'comp' ? comp_payment_info : ctpl_payment_info;
-    const form = useForm({ initialValues: paymentInfo });
+    const form = useForm({ initialValues: { ...paymentInfo, code: policyNo } });
 
     return (
         <>

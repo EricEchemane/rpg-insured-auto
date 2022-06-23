@@ -1,8 +1,11 @@
-import { NumberInput, Table, Text } from '@mantine/core';
+import { Button, Group, NumberInput, Table, Text } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form/lib/use-form';
 import { useForm } from '@mantine/form';
 import { PaymentType } from 'lib/payment_info';
 import React from 'react';
+import useFetch from 'modules/useFetch';
+import { showNotification } from '@mantine/notifications';
+import useUserContext, { UserContextType } from 'contexts/userContext';
 
 const getTotalCoverage = ({ values }: UseFormReturnType<PaymentType>) => {
     return (
@@ -26,7 +29,7 @@ const other = {
     LGT: 0.002
 };
 
-export default function PaymentTable({ form }: { form: UseFormReturnType<PaymentType>; }) {
+export default function PaymentTable({ form }: any) {
 
     const totalPremiums = getTotalPremiums(form);
     const totalCoverage = getTotalCoverage(form);
@@ -39,6 +42,44 @@ export default function PaymentTable({ form }: { form: UseFormReturnType<Payment
             otherCharges: 0
         }
     });
+
+    const { user }: UserContextType = useUserContext();
+
+    const { post, error } = useFetch('/api/users/save_payment', {
+        method: 'POST',
+        body: JSON.stringify({
+            payment: {
+                ...form.values,
+                ...otherChargesForm.values
+            }
+        })
+    });
+
+    const save = async () => {
+        if (!user.insuranceType) {
+            showNotification({
+                title: 'Ooops!',
+                message: 'Fill up the issue policy form first. Proceeed to first step',
+                color: 'orange',
+                autoClose: false
+            });
+            return;
+        }
+        const data = await post();
+        if (data) {
+            showNotification({
+                title: 'Payment saved!',
+                message: 'Your payment details has been saved successfully',
+                color: 'green'
+            });
+        } else {
+            showNotification({
+                title: 'Something went wrong',
+                message: 'An error occured on the server',
+                color: 'red',
+            });
+        }
+    };
 
     return (
         <>
@@ -115,6 +156,10 @@ export default function PaymentTable({ form }: { form: UseFormReturnType<Payment
                     </tr>
                 </tbody>
             </Table>
+
+            <Group my={30} align='flex-end'>
+                <Button onClick={save}> SAVE </Button>
+            </Group>
         </>
     );
 }

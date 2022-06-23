@@ -31,6 +31,8 @@ export default async function handler(
         else res.status(404).send('Something is incorrect');
 
     } catch (error) {
+        console.log(error);
+
         res.status(500).end();
     }
 }
