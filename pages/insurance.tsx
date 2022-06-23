@@ -46,6 +46,7 @@ export default function Insurance({ _user }: any) {
             EngineOrmotorNumber: _user.insurance.EngineOrmotorNumber,
             ChassisNumber: _user.insurance.ChassisNumber,
             PlateNumber: _user.insurance.PlateNumber,
+            unitPrice: _user.insurance.unitPrice,
             MortgageFinancing: _user.insurance.MortgageFinancing
         };
         setUser({
