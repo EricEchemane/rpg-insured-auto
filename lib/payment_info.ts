@@ -4,54 +4,37 @@ export type PaymentType = {
     deductible: number;
     towing: number;
     repLim: number;
-    coverages: {
-        TPL: number;
-        lossAndDamage: number;
-        bodilyInjury: number;
-        propertyDamage: number;
-        APPA: number;
-        AOG: number | null;
-    };
-    premiums: {
-        TPL: number;
-        lossAndDamage: number;
-        bodilyInjury: number;
-        propertyDamage: number;
-        APPA: number;
-        AOG: number | null;
-    };
-    docStamps: number;
-    VAT: number;
-    LGT: number;
-    otherCharges: number;
+    coverages_TPL: number;
+    coverages_lossAndDamage: number;
+    coverages_bodilyInjury: number;
+    coverages_propertyDamage: number;
+    coverages_APPA: number;
+    coverages_AOG: number | null;
+    premiums_TPL: number;
+    premiums_lossAndDamage: number;
+    premiums_bodilyInjury: number;
+    premiums_propertyDamage: number;
+    premiums_APPA: number;
+    premiums_AOG: number | null;
 };
 
 const comp_payment_info: PaymentType = {
     code: undefined,
-    deductible: 3000,
-    towing: 100,
-    repLim: 3100,
-    coverages: {
-        TPL: 0,
-        lossAndDamage: 568000,
-        bodilyInjury: 200000,
-        propertyDamage: 200000,
-        APPA: 350000,
-        AOG: null
-    },
-    premiums: {
-        TPL: 0,
-        lossAndDamage: 6816,
-        bodilyInjury: 420,
-        propertyDamage: 1245,
-        APPA: 766.50,
-        AOG: 1988
-    },
-    // these values will be computed base on premiums total
-    docStamps: 0,
-    VAT: 0,
-    LGT: 0,
-    otherCharges: 0,
+    deductible: 3000.00,
+    towing: 100.00,
+    repLim: 3100.00,
+    coverages_TPL: 0.00,
+    coverages_lossAndDamage: 568000.00,
+    coverages_bodilyInjury: 200000.00,
+    coverages_propertyDamage: 200000.00,
+    coverages_APPA: 350000.00,
+    coverages_AOG: null,
+    premiums_TPL: 0.00,
+    premiums_lossAndDamage: 6816.00,
+    premiums_bodilyInjury: 420.00,
+    premiums_propertyDamage: 1245.00,
+    premiums_APPA: 766.50,
+    premiums_AOG: 1988.00,
 };
 
 const ctpl_payment_info: PaymentType = {
@@ -59,27 +42,18 @@ const ctpl_payment_info: PaymentType = {
     deductible: 0,
     towing: 0,
     repLim: 0,
-    coverages: {
-        TPL: 100000,
-        lossAndDamage: 0,
-        bodilyInjury: 0,
-        propertyDamage: 0,
-        APPA: 0,
-        AOG: null
-    },
-    premiums: {
-        TPL: 740,
-        lossAndDamage: 0,
-        bodilyInjury: 0,
-        propertyDamage: 0,
-        APPA: 0,
-        AOG: 0
-    },
-    // these values will be computed base on premiums total
-    docStamps: 0,
-    VAT: 0,
-    LGT: 0,
-    otherCharges: 0,
+    coverages_TPL: 100000.00,
+    coverages_lossAndDamage: 0,
+    coverages_bodilyInjury: 0,
+    coverages_propertyDamage: 0,
+    coverages_APPA: 0,
+    coverages_AOG: null,
+    premiums_TPL: 740.00,
+    premiums_lossAndDamage: 0,
+    premiums_bodilyInjury: 0,
+    premiums_propertyDamage: 0,
+    premiums_APPA: 0,
+    premiums_AOG: 0,
 };
 
 export { comp_payment_info, ctpl_payment_info };
