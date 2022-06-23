@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import jwt from 'jsonwebtoken';
 import Printing from 'component/Printing';
 import { useRouter } from 'next/router';
+import Payment from 'component/Payment';
 
 export default function Insurance({ _user }: any) {
     const { user, setUser }: UserContextType = useUserContext();
@@ -91,10 +92,9 @@ export default function Insurance({ _user }: any) {
                     <Stepper.Step
                         label="4th step"
                         description="Payment">
-                        step 4
+                        <Payment />
                     </Stepper.Step>
                 </Stepper>
-
             </Paper>
         </Container>
     </>;
