@@ -1,26 +1,28 @@
 import '../styles/globals.css';
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import type { AppProps } from 'next/app';
-import { MantineProvider } from '@mantine/core';
 import { UserContextProvider } from 'contexts/userContext';
-import { NotificationsProvider } from '@mantine/notifications';
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <>
-    <MantineProvider
-      theme={{
-        primaryColor: 'orange'
-      }}
-    >
-      <UserContextProvider>
-        <NotificationsProvider>
-          <div className="landing">
+  return (
+    <div>
+      <MantineProvider
+        theme={{
+          primaryColor: 'orange',
+        }}
+      >
+        <UserContextProvider>
+          <div className='landing'>
+            <Notifications />
             <Component {...pageProps} />
           </div>
-        </NotificationsProvider>
-      </UserContextProvider>
-    </MantineProvider>
-  </>;
-
+        </UserContextProvider>
+      </MantineProvider>
+    </div>
+  );
 }
 
 export default MyApp;

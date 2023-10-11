@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model Insurance {
   id                  Int    @id @default(autoincrement())
   nameOfAssured       String
@@ -60,9 +65,4 @@ model Payment {
   otherCharges             Float
   user                     User   @relation(fields: [userId], references: [id])
   userId                   String @unique
-}
-
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
 }
